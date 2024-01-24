@@ -1,7 +1,7 @@
 library(reticulate)
 
-path = "C:/Honors Project/Social Network Analysis/Data/"
-path_analysis = "C:/Honors Project/Social Network Analysis/Analysis/"
+path = ".../Data/"
+path_analysis = ".../Analysis/"
 
 pd = import("pandas")
 year_data = pd$read_pickle(paste(path,"KNN/KNN_YEAR_METRICS_201192+.pkl",sep=""))
