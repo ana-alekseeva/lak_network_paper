@@ -83,8 +83,8 @@ run_lin_regr = function(data, y, FE, X, network_vars, k_vec){
 }
 ###############################################################
 
-path = "C:/Honors Project/Social Network Analysis/Data/"
-path_analysis = "C:/Honors Project/Social Network Analysis/Analysis/"
+path = ".../Data/"
+path_analysis = ".../Analysis/"
 
 pd = import("pandas")
 year_data = pd$read_pickle(paste(path,"KNN/KNN_YEAR_METRICS_201192+.pkl",sep=""))
