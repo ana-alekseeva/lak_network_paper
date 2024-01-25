@@ -14,4 +14,4 @@ There are three Jupyter Notebooks 01. preprocessing, 02. network_variables, 03. 
 
 ## Analysis
 
-05. first_year_regression R script runs three specifications of fixed effects regression for final GPA and one specification of logistic regression for major change.
+R script 05. first_year_regression was used to run three specifications of fixed effects regression for final GPA and one specification of logistic regression for major change.
