@@ -5,6 +5,9 @@ library(estimatr)
 library(MASS)
 library(ggpubr)
 library(reticulate)
+library(ResourceSelection)
+
+
 #####################################################################
 # FUNCTIONS
 
@@ -83,8 +86,8 @@ run_lin_regr = function(data, y, FE, X, network_vars, k_vec){
 }
 ###############################################################
 
-path = ".../Data/"
-path_analysis = ".../Analysis/"
+path = "C:/Honors Project/Social Network Analysis/Data/"
+path_analysis = "C:/Honors Project/Social Network Analysis/Analysis/"
 
 pd = import("pandas")
 year_data = pd$read_pickle(paste(path,"KNN/KNN_YEAR_METRICS_201192+.pkl",sep=""))
@@ -408,20 +411,6 @@ for (k in k_vec){
   p = predict(logistic_regr, cohort_2016_grad, type = "response")
   Con_table = table(p > 0.5, cohort_2016_grad$major_change)
   print(Con_table)
-  #print(vif(logistic_regr))
-  
-# AOC
-  par(mfrow = c(1, 1))
-  pred = prediction(p, cohort_2016_grad$major_change)
-  roc = performance(pred, "tpr", "fpr")
-  plot(roc, col = 'red',
-       main = "ROC Curve")
-  abline(a=0, b=1)
-  auc = performance(pred, "auc")
-  auc = unlist(slot(auc, "y.values"))
-  auc = round(auc, 2)
-  legend(.6, .2, auc, title = "Area under the Curve", cex = .75)
-  
   
   row.names(regr_output) = rename_output_vars(row.names(regr_output), network_vars,k)
   colnames(regr_output) = c(paste("Odds_Ratio",model_name,sep="_"),
@@ -439,6 +428,9 @@ output_change = output_list %>% reduce(full_join,"var_name")
 row.names(output_change) = output_change$var_name
 output_change = output_change[,-c(4)]
 
+model_names = c("5. 16 neighbors", "4. 8 neighbors",
+                "3. 4 neighbors","2. 2 neighbors",
+                "1. no neighbors")
 metrics = output_change[c(29,30,31),]
 metrics = metrics[,c(1,4,7,10,13)]
 colnames(metrics) = model_names
@@ -449,12 +441,11 @@ lrt_p_values
 
 # PLOT THE RESULTS
 
-estimates = output_change[-c(2:13),]
+estimates = output_change[-c(2:15),]
 estimates = estimates[-c(17,18,19),]
 estimates = estimates[order(row.names(estimates)), ]
 row.names(estimates) = c("(Intercept)","Female","Female(neighbors)",
                          "GPA","GPA(neighbors)","Low Income","Low Income(neighbors)",
-                         #"major_change(neighbours)",
                          "STEM","STEM(neighbors)","Same major(neighbors)",
                          "Admission score","Admission score(neighbors)",
                          "URM","URM(neighbors)",
@@ -489,7 +480,6 @@ logit_regr_plot =
        x = "Odds Ratio Estimate",
        y = NULL,
        color='Model specification')+
-  #scale_shape_manual(values=c(0, 15,16,17,18))+
   scale_color_manual(values=c("#000000", "#009E73","#0072B2", "#D55E00","#CC79A7"))+
   scale_y_discrete(limits=rev)+
   theme_bw()
