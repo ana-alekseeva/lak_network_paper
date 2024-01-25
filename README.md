@@ -8,3 +8,10 @@ Python and R must be installed to reproduce the results of the study. Unfortunat
 
 # Project structure
 
+## Data Preprocessing
+
+There are three Jupyter Notebooks 01. preprocessing, 02. network_variables, 03. KNN_variables_prep that were used for initial preprocessing, search for k-nearest neighbors, and computing aggregated metrics correspondingly.
+
+## Analysis
+
+05. first_year_regression R script runs three specifications of fixed effects regression for final GPA and one specification of logistic regression for major change.
